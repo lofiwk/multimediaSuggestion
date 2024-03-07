@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Get all the buttons
+    // Obtener botones
     var accordionButtons = document.querySelectorAll(".btn-link");
 
-    // Add event listeners to each button
+    // Agregar listeners a botones
     accordionButtons.forEach(function(button) {
         button.addEventListener("click", function() {
-            // Get the corresponding iframe
+            // Obtener iframe correspondiente
             var collapseId = this.getAttribute("data-target").replace("#", "");
             var collapseElement = document.getElementById(collapseId);
 
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 var iframe = collapseElement.querySelector("iframe");
 
                 if (iframe) {
-                    // Create a new Reproductor instance based on the iframe
+                    // Crear instancia de Reproductor basada en iframe
                     var reproductor;
                     switch (collapseId) {
                         case "collapseOne":
@@ -27,19 +27,19 @@ document.addEventListener("DOMContentLoaded", function() {
                             break;
                     }
 
-                    // Update the iframe's src attribute with the new URL and play multimedia
+                    // Actualizar src del iframe con nueva URL y reproducir multimedia
                     reproductor.playMultimedia();
                 } else {
-                    console.error("Iframe not found within the collapse element.");
+                    console.error("Iframe no encontrado en el elemento de colapso.");
                 }
             } else {
-                console.error("Collapse element not found.");
+                console.error("Elemento de colapso no encontrado.");
             }
         });
     });
 });
 
-// Multimedia class (parent class)
+// Clase Multimedia (principal)
 class Multimedia {
     constructor(url) {
         this._url = url;
@@ -50,11 +50,11 @@ class Multimedia {
     }
 
     setInicio(tiempo) {
-        console.log("Este método es para realizar un cambio en el URL del video");
+        console.log("Cambiar inicio del video");
     }
 }
 
-// Reproductor class (child class)
+// Clase Reproductor (secundaria)
 class Reproductor extends Multimedia {
     constructor(url, id) {
         super(url);
@@ -66,30 +66,30 @@ class Reproductor extends Multimedia {
         if (iframe) {
             iframe.setAttribute("src", this._url);
         } else {
-            console.error(`Iframe with id "${this._id}" not found.`);
+            console.error(`Iframe con id "${this._id}" no encontrado.`);
         }
     }
 
     cambiarURL(nuevaURL) {
         this._url = nuevaURL;
-        console.log("La URL del video ha sido cambiada a: " + this._url);
+        console.log("URL del video cambiada a: " + this._url);
     }
 
     setInicio(tiempo) {
         this._url += `?start=${tiempo}`;
-        console.log(`La URL de la etiqueta iframe ha sido modificada con el tiempo de inicio: ${tiempo}`);
+        console.log(`URL del iframe modificada con inicio: ${tiempo}`);
     }
 }
 
-// Instantiate Reproductor class for each iframe
+// Instanciar Reproductor para cada iframe
 const musicReproductor = new Reproductor("https://www.youtube.com/embed/MUSIC_VIDEO_ID", "collapseOne");
 const movieReproductor = new Reproductor("https://www.youtube.com/embed/MOVIE_VIDEO_ID", "collapseTwo");
 const seriesReproductor = new Reproductor("https://www.youtube.com/embed/SERIES_VIDEO_ID", "collapseThree");
 
-// Invoke playMultimedia method for each instance
+// Reproducir multimedia para cada instancia
 musicReproductor.playMultimedia();
 movieReproductor.playMultimedia();
 seriesReproductor.playMultimedia();
 
-// Utilize setInicio method to modify start time of a specific instance
+// Modificar inicio de una instancia específica
 musicReproductor.setInicio(30);
