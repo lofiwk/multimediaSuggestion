@@ -14,22 +14,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 if (iframe) {
                     // Create a new Reproductor instance based on the iframe
-                    var reproductor = new Reproductor(iframe.src, collapseId);
-
-                    // Change the URL of the video based on the collapse ID
+                    var reproductor;
                     switch (collapseId) {
                         case "collapseOne":
-                            reproductor.cambiarURL("https://www.youtube.com/embed/MUSIC_VIDEO_ID");
+                            reproductor = new Reproductor("https://www.youtube.com/embed/MUSIC_VIDEO_ID", collapseId);
                             break;
                         case "collapseTwo":
-                            reproductor.cambiarURL("https://www.youtube.com/embed/MOVIE_VIDEO_ID");
+                            reproductor = new Reproductor("https://www.youtube.com/embed/MOVIE_VIDEO_ID", collapseId);
                             break;
                         case "collapseThree":
-                            reproductor.cambiarURL("https://www.youtube.com/embed/SERIES_VIDEO_ID");
+                            reproductor = new Reproductor("https://www.youtube.com/embed/SERIES_VIDEO_ID", collapseId);
                             break;
                     }
 
-                    // Update the iframe's src attribute with the new URL
+                    // Update the iframe's src attribute with the new URL and play multimedia
                     reproductor.playMultimedia();
                 } else {
                     console.error("Iframe not found within the collapse element.");
@@ -83,7 +81,15 @@ class Reproductor extends Multimedia {
     }
 }
 
-// Usage example
-const reproductor = new Reproductor("https://www.youtube.com/embed/abc123", "musicIframe");
-reproductor.playMultimedia();
-reproductor.setInicio(30);
+// Instantiate Reproductor class for each iframe
+const musicReproductor = new Reproductor("https://www.youtube.com/embed/MUSIC_VIDEO_ID", "collapseOne");
+const movieReproductor = new Reproductor("https://www.youtube.com/embed/MOVIE_VIDEO_ID", "collapseTwo");
+const seriesReproductor = new Reproductor("https://www.youtube.com/embed/SERIES_VIDEO_ID", "collapseThree");
+
+// Invoke playMultimedia method for each instance
+musicReproductor.playMultimedia();
+movieReproductor.playMultimedia();
+seriesReproductor.playMultimedia();
+
+// Utilize setInicio method to modify start time of a specific instance
+musicReproductor.setInicio(30);
